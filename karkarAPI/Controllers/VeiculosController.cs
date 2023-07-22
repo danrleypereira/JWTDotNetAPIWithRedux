@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using DTOs.Veiculo;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,18 +10,50 @@ namespace karkarAPI.Controllers
     [ApiController]
     public class VeiculosController : ControllerBase
     {
-        // GET: api/<VeiculosController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IVeiculoRepository _veiculoRepository;
+        public VeiculosController(IVeiculoRepository veiculoRepository)
         {
-            return new string[] { "value1", "value2" };
+            _veiculoRepository = veiculoRepository;
         }
 
-        // GET api/<VeiculosController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<VeiculoResponseDTO>> GetVeiculoById(int id)
         {
-            return "value";
+            var veiculo = await _veiculoRepository.GetVeiculoByIdAsync(id);
+
+            if (veiculo == null)
+            {
+                return NotFound();
+            }
+
+            var veiculoResponseDTO = new VeiculoResponseDTO
+            {
+                Id = veiculo.Id,
+                Nome = veiculo.Nome,
+                Marca = veiculo.Marca,
+                Modelo = veiculo.Modelo,
+                Foto = veiculo.Foto,
+                Valor = veiculo.Valor
+            };
+
+            return veiculoResponseDTO;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<VeiculoResponseDTO>>> Get()
+        {
+            var veiculos = await _veiculoRepository.GetVeiculosAsync();
+            var veiculoResponseDTOs = veiculos.Select(v => new VeiculoResponseDTO
+            {
+                Id = v.Id,
+                Nome = v.Nome,
+                Marca = v.Marca,
+                Modelo = v.Modelo,
+                Foto = v.Foto,
+                Valor = v.Valor
+            }).ToList();
+
+            return veiculoResponseDTOs;
         }
 
         // POST api/<VeiculosController>

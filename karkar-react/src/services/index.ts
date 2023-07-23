@@ -1,14 +1,6 @@
-import { Veiculo } from "../types";
+import { PaginatedResponse } from "../types";
 
-interface PaginatedResponse {
-    veiculos: Veiculo[];
-    currentPage: number;
-    nextPage: number;
-    previousPage: number;
-    totalPages: number;
-}
-
-export async function fetchVeiculos(page: number, pageSize: number): Promise<Veiculo[]> {
+export async function fetchVeiculos(page: number, pageSize: number): Promise<PaginatedResponse> {
     const apiUrl = `https://localhost:7247/api/Veiculos/Paginated?page=${page}&pageSize=${pageSize}`;
 
     try {
@@ -19,7 +11,7 @@ export async function fetchVeiculos(page: number, pageSize: number): Promise<Vei
         }
 
         const data: PaginatedResponse = await response.json();
-        return data.veiculos;
+        return data;
     } catch (error) {
         console.error('Error fetching data:', error);
         throw error;

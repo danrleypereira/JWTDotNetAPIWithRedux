@@ -3,6 +3,7 @@ import { Veiculo } from '../../types';
 
 interface UpdateVehicleAction {
   type: typeof UPDATE_VEHICLES
+  payload: Veiculo[]
 }
 
 interface FetchDataSuccessAction {
@@ -13,5 +14,7 @@ interface FetchDataSuccessAction {
 export type VehiclesActionTypes = UpdateVehicleAction | FetchDataSuccessAction
 
 export interface SystemState {
-  vehicles: [Veiculo]
+  vehicles: {
+    value: Veiculo[]
+  }
 }

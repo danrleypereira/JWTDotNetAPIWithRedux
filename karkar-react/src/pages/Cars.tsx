@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { selectors } from '../features/vehicle'
 import { fetchVehiclesThunk } from '../features/vehicle/vehiclesThunks'
+import { vehicleHoveredAction } from '../features/vehicle/vehiclesActions'
 import { updatePaginationAction } from '../features/vehicle/vehiclesActions'
 import { AppDispatch } from '../store'
 
 export const Cars: React.FC = () => {
   const vehicles = useSelector(selectors.getVehiclesValue)
   const pagination = useSelector(selectors.getVehiclesPagination)
+  const hoveredVehicle = useSelector(selectors.getHoveredVehicle)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
@@ -51,9 +53,49 @@ export const Cars: React.FC = () => {
       fetchVehiclesThunk(pagination.currentPage + 1, pagination.pageSize)
     )
   }
+  const vehicleClicked = (id: number) => {
+    const vehicle = vehicles.find((v) => v.id === id)
+
+    if (vehicle) {
+      dispatch(vehicleHoveredAction(vehicle))
+    } else {
+      // Handle the case where no vehicle is found.
+      // This could involve dispatching a different action,
+      // showing an error message, etc.
+      console.error(`No vehicle found with id ${id}`)
+    }
+  }
 
   return (
     <Fragment>
+      <h1>Hovered vehicle</h1>
+      <div className="row">
+        {hoveredVehicle && (
+          <div className="col s12 m5">
+            <div className="card">
+              <div className="card-image">
+                <img
+                  className="responsive-img"
+                  src={hoveredVehicle.foto}
+                  alt={hoveredVehicle.nome}
+                />
+              </div>
+              <div className="card-content">
+                <h2 className="car-name">{hoveredVehicle.nome}</h2>
+                <p className="car-details">
+                  {hoveredVehicle.modelo} • {hoveredVehicle.marca}
+                </p>
+                {/* <span className="payment-total payment-highlight">
+                  R$&nbsp;
+                  {hoveredVehicle?.valor
+                    .toFixed(2)
+                    .replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                </span> */}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
       <h1>Cars</h1>
       <ul className="pagination">
         <li
@@ -104,7 +146,11 @@ export const Cars: React.FC = () => {
       <div className="row">
         {vehicles.length !== 0 &&
           vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="col s11 m5 card-panel card">
+            <div
+              key={vehicle.id}
+              className="col s11 m5 card-panel card"
+              onClick={() => vehicleClicked(vehicle.id)}
+            >
               <div className="card-header">
                 <img
                   className="responsive-img"

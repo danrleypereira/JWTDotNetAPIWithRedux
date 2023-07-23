@@ -1,6 +1,6 @@
 import { Pagination, Veiculo } from '../../types'
-import { FETCH_DATA_SUCCESS, UPDATE_PAGINATION } from './actionTypes'
-import { VehicleAction, PaginationAction } from './vehiclesTypes'
+import { FETCH_DATA_SUCCESS, UPDATE_PAGINATION, VEHICLE_HOVERED } from './actionTypes'
+import { VehicleAction, GenericAction } from './vehiclesTypes'
 
 const addVehicleAction = (vehicle: Veiculo) => ({
   type: 'vehicle/vehicleAdded',
@@ -12,9 +12,14 @@ const fetchDataSuccess = (vehicles: Veiculo[]): VehicleAction => ({
   payload: vehicles,
 })
 
-const updatePaginationAction = (pagination: Pagination): PaginationAction => ({
+const updatePaginationAction = (pagination: Pagination): GenericAction => ({
   type: UPDATE_PAGINATION,
   payload: pagination,
 })
 
-export { addVehicleAction, fetchDataSuccess, updatePaginationAction }
+const vehicleHoveredAction = (vehicle: Veiculo): GenericAction => ({
+  type: VEHICLE_HOVERED,
+  payload: vehicle,
+})
+
+export { addVehicleAction, fetchDataSuccess, updatePaginationAction, vehicleHoveredAction }

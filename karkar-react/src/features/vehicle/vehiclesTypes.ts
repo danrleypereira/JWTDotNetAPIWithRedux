@@ -2,12 +2,18 @@ import {
   UPDATE_VEHICLES,
   FETCH_DATA_SUCCESS,
   UPDATE_PAGINATION,
+  VEHICLE_HOVERED,
 } from './actionTypes'
 import { Pagination, Veiculo } from '../../types'
 
 interface UpdateVehicleAction {
   type: typeof UPDATE_VEHICLES
   payload: Veiculo[]
+}
+
+export interface HoveredVehicleAction {
+  type: typeof VEHICLE_HOVERED
+  payload: Veiculo
 }
 
 export interface FetchDataSuccessAction {
@@ -25,7 +31,7 @@ export type VehicleAction = {
   payload: Veiculo[]
 }
 
-export type PaginationAction = {
+export type GenericAction = {
   type: string
   payload: Object
 }
@@ -34,10 +40,12 @@ export type VehiclesActionTypes =
   | UpdateVehicleAction
   | FetchDataSuccessAction
   | UpdatePaginationAction
+  | HoveredVehicleAction
 
 export interface SystemState {
   vehicles: {
     value: Veiculo[]
-    pagination: Pagination
+    pagination: Pagination,
+    destaque: Veiculo
   }
 }

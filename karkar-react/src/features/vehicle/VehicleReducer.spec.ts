@@ -8,6 +8,7 @@ describe('features > vehicle > vehicleReducer', () => {
     const initialState = {
       value: [] as Veiculo[],
       pagination: {} as Pagination,
+      destaque: {} as Veiculo,
     }
 
     const expectedState = {

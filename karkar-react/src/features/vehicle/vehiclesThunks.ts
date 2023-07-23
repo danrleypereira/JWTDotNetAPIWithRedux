@@ -4,13 +4,13 @@ import { RootState } from '../../store'
 import { fetchVeiculos } from '../../services'
 import { PaginatedResponse, Pagination } from '../../types'
 import { fetchDataSuccess, updatePaginationAction } from './vehiclesActions'
-import { PaginationAction } from './vehiclesTypes'
+import { GenericAction } from './vehiclesTypes'
 import { UPDATE_VEHICLES } from './actionTypes'
 
 export const fetchVehiclesThunk = (
   page: number = 1,
   pageSize: number = 10
-): ThunkAction<void, RootState, unknown, PaginationAction> => async (
+): ThunkAction<void, RootState, unknown, GenericAction> => async (
   dispatch
 ) => {
   try {

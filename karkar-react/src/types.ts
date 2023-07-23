@@ -6,3 +6,11 @@ export interface Veiculo {
     foto: string;
     valor: number;
 }
+
+export interface PaginatedResponse {
+    veiculos: Veiculo[];
+    currentPage: number;
+    nextPage: number;
+    previousPage: number;
+    totalPages: number;
+  }

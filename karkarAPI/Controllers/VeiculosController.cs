@@ -40,7 +40,7 @@ namespace karkarAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VeiculoResponseDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<VeiculoResponseDTO>>> GetAll()
         {
             var veiculos = await _veiculoRepository.GetVeiculosAsync();
             var veiculoResponseDTOs = veiculos.Select(v => new VeiculoResponseDTO
@@ -54,6 +54,34 @@ namespace karkarAPI.Controllers
             }).ToList();
 
             return veiculoResponseDTOs;
+        }
+        [HttpGet("Paginated")]
+        public async Task<ActionResult<PaginatedVeiculosResponseDTO>> GetPaginated(
+            [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var veiculos = await _veiculoRepository.GetVeiculosAsync(page, pageSize);
+            var veiculoResponseDTOs = veiculos.Select(v => new VeiculoResponseDTO
+            {
+                Id = v.Id,
+                Nome = v.Nome,
+                Marca = v.Marca,
+                Modelo = v.Modelo,
+                Foto = v.Foto,
+                Valor = v.Valor
+            }).ToList();
+
+            int totalVeiculos = await _veiculoRepository.GetTotalVeiculosAsync(); // Implement this method in the repository to get the total number of veiculos
+
+            var paginatedResponse = new PaginatedVeiculosResponseDTO
+            {
+                Veiculos = veiculoResponseDTOs,
+                CurrentPage = page,
+                NextPage = page < totalVeiculos / pageSize ? page + 1 : -1,
+                PreviousPage = page > 1 ? page - 1 : -1,
+                TotalPages = (int)Math.Ceiling((double)totalVeiculos / pageSize)
+            };
+
+            return paginatedResponse;
         }
 
         // POST api/<VeiculosController>

@@ -12,7 +12,18 @@ namespace DAL.Repositories
         {
             _context = context;
         }
+        public async Task<IEnumerable<Veiculo>> GetVeiculosAsync(int page, int pageSize)
+        {
+            // Calculate the number of records to skip based on the page number and page size
+            int skip = (page - 1) * pageSize;
 
+            // Fetch the veiculos from the database with pagination using Skip and Take
+            return await _context.Veiculos
+                .OrderBy(v => v.Id) // Order by a suitable property (e.g., Id) for consistent results
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+        }
         public async Task<IEnumerable<Veiculo>> GetVeiculosAsync()
         {
             return await _context.Veiculos.ToListAsync();
@@ -21,6 +32,11 @@ namespace DAL.Repositories
         public async Task<Veiculo> GetVeiculoByIdAsync(int id)
         {
             return await _context.Veiculos.FindAsync(id);
+        }
+
+        public async Task<int> GetTotalVeiculosAsync()
+        {
+            return await _context.Veiculos.CountAsync();
         }
 
         public async Task AddVeiculoAsync(Veiculo veiculo)

@@ -15,5 +15,14 @@ namespace DTOs.Veiculo
         public string Foto { get; set; }
         public decimal Valor { get; set; }
     }
+    public class PaginatedVeiculosResponseDTO
+    {
+        public IEnumerable<VeiculoResponseDTO> Veiculos { get; set; }
+        public int CurrentPage { get; set; }
+        public int NextPage { get; set; }
+        public int PreviousPage { get; set; }
+        public int TotalPages { get; set; }
+    }
+
 
 }

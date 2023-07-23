@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { selectors } from '../features/vehicle'
 import { actionTypes } from '../features/vehicle'
 import { fetchVeiculos } from '../services/index'
-import { Veiculo, PaginatedResponse } from '../types'
+import { PaginatedResponse } from '../types'
 
 export const Cars: React.FC = () => {
   const vehicles = useSelector(selectors.getVehiclesValue)
-  const [vehiclesState, setVehicleState] = useState<Veiculo[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize] = useState(10)
   const [totalPages, setTotalPages] = useState(0)
@@ -18,14 +17,11 @@ export const Cars: React.FC = () => {
 
   async function fetchData(page: number) {
     try {
-      // const veiculos: Veiculo[] = await fetchVeiculos(page, pageSize);
       const paginatedResponse: PaginatedResponse = await fetchVeiculos(page, pageSize);
-      setVehicleState(paginatedResponse.veiculos);
       setCurrentPage(paginatedResponse.currentPage);
       setTotalPages(paginatedResponse.totalPages);
       setPreviousPage(paginatedResponse.previousPage);
-      dispatch({ type: actionTypes.FETCH_DATA_SUCCESS, payload: paginatedResponse.veiculos });
-      console.log(paginatedResponse.veiculos);
+      dispatch({ type: actionTypes.UPDATE_VEHICLES, payload: paginatedResponse.veiculos });
     } catch (error) {
       // Handle errors here
     }
@@ -34,12 +30,8 @@ export const Cars: React.FC = () => {
   //create useEffect to fetch data from api and dispatch action
   useEffect(() => {
     console.log(vehicles);
-
-    if (vehiclesState.length === 0) fetchData(currentPage);
-    dispatch({ type: actionTypes.UPDATE_VEHICLES })
-    console.log(vehiclesState);
-
-  }, [vehiclesState]);
+    if (vehicles.length === 0) fetchData(currentPage);
+  }, [dispatch]);
 
   const previousEvent = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     if (previousPage === -1) {
@@ -84,8 +76,8 @@ export const Cars: React.FC = () => {
 
 
       <div className='row'>
-        {vehiclesState.length !== 0 &&
-          vehiclesState.map((vehicle) => (
+        {vehicles.length !== 0 &&
+          vehicles.map((vehicle) => (
             <div key={vehicle.id} className="col s11 m5 card-panel card">
               <div className="card-header">
                 <img className='responsive-img' src={vehicle.foto} alt={vehicle.nome} />

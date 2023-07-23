@@ -40,19 +40,6 @@ export const Cars: React.FC = () => {
   return (
     <Fragment>
       <h1>Cars</h1>
-      <div>
-        {vehiclesState.length !== 0 && vehiclesState.map((vehicle) => (
-          <div key={vehicle.id} className="card">
-            <img src={vehicle.foto} alt={vehicle.nome} />
-            <div className="card-content">
-              <h2>{vehicle.marca} - {vehicle.modelo}</h2>
-              <p>{vehicle.nome}</p>
-              <p>Price: ${vehicle.valor}</p>
-              {/* Display other properties as needed */}
-            </div>
-          </div>
-        ))}
-      </div>
       <ul className="pagination">
         <li className="disabled"><a href="#!"><i className="material-icons">chevron_left</i></a></li>
         <li className="active"><a href="#!">1</a></li>
@@ -62,6 +49,23 @@ export const Cars: React.FC = () => {
         <li className="waves-effect"><a href="#!">5</a></li>
         <li className="waves-effect"><a href="#!"><i className="material-icons">chevron_right</i></a></li>
       </ul>
+      <div className='row'>
+          {vehiclesState.length !== 0 &&
+            vehiclesState.map((vehicle) => (
+              <div key={vehicle.id} className="col s11 m5 card-panel card">
+                  <div className="card-header">
+                    <img className='responsive-img' src={vehicle.foto} alt={vehicle.nome} />
+                  </div>
+                  <div className="card-body center-align">
+                    <h2 className="car-name">{vehicle.nome}</h2>
+                    <p className="car-details">{vehicle.modelo} • {vehicle.marca}</p>
+                    <span className="payment-total payment-highlight"> 
+                      R$&nbsp;{vehicle.valor.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                    </span>
+                  </div>
+              </div>
+            ))}
+      </div>
       <button
         type="button"
         className="btn"

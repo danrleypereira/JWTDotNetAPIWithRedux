@@ -21,3 +21,56 @@ code {
   display: flex;
   justify-content: space-between;
 }
+.card {
+  margin: 40px;
+  border-top-right-radius: .375rem;
+  border-top-left-radius: .375rem;
+  padding: 0!important;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+  border-top-right-radius: .375rem;
+  border-top-left-radius: .375rem;
+  background-color: var(--medium-tint);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+.car-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-margin-end: 1rem;
+  margin-inline-end: 1rem;
+  -webkit-margin-start: 1rem;
+  margin-inline-start: 1rem;
+  -webkit-margin-after: .5rem;
+  margin-block-end: .5rem;
+}
+
+.car-details {
+  font-size: .875rem;
+  color: #898989;
+  font-weight: 500;
+}
+
+.payment-highlight {
+  line-height: 1.2;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #3374db;
+  -webkit-margin-end: .5rem;
+  margin-inline-end: .5rem;
+}

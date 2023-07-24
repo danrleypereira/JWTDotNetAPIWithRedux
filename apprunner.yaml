@@ -9,7 +9,7 @@ build:
     build:
       - dotnet build
       - echo "dotnet ef database update --project DAL --startup-project karkarAPI"
-      - dotnet publish -c Release -o .karkarAPI/bin/Release/net6.0/publish
+      - echo "dotnet publish -c Release -o .karkarAPI/bin/Release/net6.0/publish"
     post-build:
       - echo "test now"
 run:

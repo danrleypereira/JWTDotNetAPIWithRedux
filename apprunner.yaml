@@ -10,18 +10,19 @@ build:
       - dotnet build
       - echo "dotnet ef database update --project DAL --startup-project karkarAPI"
       - echo "dotnet publish -c Release -o .karkarAPI/bin/Release/net6.0/publish"
+      - dotnet build -c Release -o out
     post-build:
       - echo "test now"
 run:
-  command: dotnet run --project karkarAPI/karkarAPI.csproj --environment Production --launch-profile "karkarAPI-Production"
+  command: dotnet out/karkarAPI.dll
   network: 
     port: 7247
   env:
     - name: ASPNETCORE_URLS
-      value: https://*:7247
+      value: http://*:7247
     - name: ASPNETCORE_ENVIRONMENT
       value: Production
     - name: ASPNETCORE_HTTPS_PORT
-      value: 7247
+      value: 7246
     - name: ASPNETCORE_ALLOWED_HOSTS
       value: "*"

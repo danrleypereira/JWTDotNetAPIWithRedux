@@ -8,16 +8,17 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://0.0.0.0:7247;http://0.0.0.0:5226"
+      "applicationUrl": "http://0.0.0.0:7247;http://0.0.0.0:5226"
     },
     "karkarAPI-Production": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
+      "launchUrl": "health",
       "applicationUrl": "https://0.0.0.0:7247;http://0.0.0.0:5226",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production",
-        "ASPNETCORE_URLS": "https://*:7247",
+        "ASPNETCORE_URLS": "https://*:7247;http://*:7246",
         "ASPNETCORE_ALLOWED_HOSTS": "localhost;https://master.d17b8su9rhd75y.amplifyapp.com;170.83.132.66"
       }
     },

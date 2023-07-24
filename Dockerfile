@@ -17,8 +17,9 @@ RUN dotnet build -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 EXPOSE 7247
+EXPOSE 7246
 ENV ASPNETCORE_ENVIRONMENT=Production \
-    ASPNETCORE_URLS=https://*:7247 \
+    ASPNETCORE_URLS=http://*:7247 \
     ASPNETCORE_ALLOWED_HOSTS="localhost;https://master.d17b8su9rhd75y.amplifyapp.com;170.83.132.66"
 
 COPY --from=build /app/out .

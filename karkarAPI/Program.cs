@@ -5,6 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Services.AddHttpsRedirection(options =>
+//{
+//    options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+//    options.HttpsPort = 7247;
+//});
+builder.Services.AddHealthChecks();
+
 // Add services to the container.
 builder.Services.AddDbContext<KarkarDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -21,25 +28,26 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-var urls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
-app.Urls.Add(urls);
-
-// Enable CORS
-app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
 app.UseSwagger();
 app.UseSwaggerUI();
 // }
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    //app.UseHsts();
+}
+//app.UseHttpsRedirection();
 
-app.UseHttpsRedirection();
+// Enable CORS
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/health", () => "Healthy"); // Health check endpoint
+app.MapHealthChecks("/health");
 
 app.Run();

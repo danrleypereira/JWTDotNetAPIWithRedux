@@ -7,7 +7,12 @@
 2.  dotnet run --project karkarAPI/karkarAPI.csproj
 
 ## PRODUÇÃO
-- dotnet run --project karkarAPI/karkarAPI.csproj --environment Production --launch-profile "karkarAPI-Production"
+- amplify com CI/CD para o app react
+- app runner com CD para a webapi .net
+
+### testando produção local
+dotnet dev-certs https -ep \.aspnet\https\aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER>
+dotnet dev-certs https --trust
 
 ## criar migrações
 dotnet ef migrations add InitialCreate --project DAL --startup-project karkarAPI

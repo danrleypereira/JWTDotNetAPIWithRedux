@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  karkarapi:
+    image: karkarapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 7247:7247
+    volumes:
+      - C:\Users\Aulus Diniz\.aspnet\https:/root/.aspnet/https/
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=changeme
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx

@@ -16,7 +16,6 @@ run:
   command: dotnet run --project karkarAPI/karkarAPI.csproj --environment Production --launch-profile "karkarAPI-Production"
   network: 
     port: 7247
-    env: API_PORT
   env:
     - name: ASPNETCORE_URLS
       value: https://*:7247

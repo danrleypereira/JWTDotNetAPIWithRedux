@@ -1,5 +1,9 @@
 import { Pagination, Veiculo } from '../../types'
-import { FETCH_DATA_SUCCESS, UPDATE_PAGINATION, VEHICLE_HOVERED } from './actionTypes'
+import {
+  FETCH_DATA_SUCCESS,
+  UPDATE_PAGINATION,
+  VEHICLE_HOVERED,
+} from './actionTypes'
 import { VehicleAction, GenericAction } from './vehiclesTypes'
 
 const addVehicleAction = (vehicle: Veiculo) => ({
@@ -22,4 +26,9 @@ const vehicleHoveredAction = (vehicle: Veiculo): GenericAction => ({
   payload: vehicle,
 })
 
-export { addVehicleAction, fetchDataSuccess, updatePaginationAction, vehicleHoveredAction }
+export {
+  addVehicleAction,
+  fetchDataSuccess,
+  updatePaginationAction,
+  vehicleHoveredAction,
+}

@@ -10,9 +10,7 @@ import { UPDATE_VEHICLES } from './actionTypes'
 export const fetchVehiclesThunk = (
   page: number = 1,
   pageSize: number = 10
-): ThunkAction<void, RootState, unknown, GenericAction> => async (
-  dispatch
-) => {
+): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
   try {
     const response: PaginatedResponse = await fetchVeiculos(page, pageSize)
     dispatch(fetchDataSuccess(response.veiculos))

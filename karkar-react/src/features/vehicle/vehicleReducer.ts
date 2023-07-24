@@ -4,7 +4,7 @@ import {
   UPDATE_VEHICLES,
   FETCH_DATA_SUCCESS,
   UPDATE_PAGINATION,
-  VEHICLE_HOVERED
+  VEHICLE_HOVERED,
 } from './actionTypes'
 import { VehiclesActionTypes } from './vehiclesTypes'
 import { Pagination, Veiculo } from '../../types'

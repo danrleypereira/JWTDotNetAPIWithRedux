@@ -6,6 +6,9 @@
 1. dotnet ef database update
 2.  dotnet run --project karkarAPI/karkarAPI.csproj
 
+## PRODUÇÃO
+- dotnet run --project karkarAPI/karkarAPI.csproj --environment Production --launch-profile "karkarAPI-Production"
+
 ## criar migrações
 dotnet ef migrations add InitialCreate --project DAL --startup-project karkarAPI
 dotnet ef database update --project DAL --startup-project karkarAPI

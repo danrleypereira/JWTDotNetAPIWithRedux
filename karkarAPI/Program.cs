@@ -21,20 +21,25 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+var urls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+app.Urls.Add(urls);
+
 // Enable CORS
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+app.UseSwagger();
+app.UseSwaggerUI();
+// }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/health", () => "Healthy"); // Health check endpoint
 
 app.Run();

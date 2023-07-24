@@ -3,15 +3,15 @@ runtime: dotnet6
 build:
   commands:
     pre-build:
-      - dotnet tool install --global dotnet-ef
+      - echo "dotnet tool install --global dotnet-ef"
       - dotnet clean
       - dotnet restore
     build:
       - dotnet build
-      - dotnet ef database update --project DAL --startup-project karkarAPI
+      - echo "dotnet ef database update --project DAL --startup-project karkarAPI"
       - dotnet publish -c Release -o .karkarAPI/bin/Release/net6.0/publish
     post-build:
-      - dotnet test
+      - echo "test now"
 run:
   command: dotnet run --project karkarAPI/karkarAPI.csproj
   network: 

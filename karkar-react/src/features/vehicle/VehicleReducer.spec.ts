@@ -1,13 +1,15 @@
-import vehicleReducer from './vehicleReducer';
-import { UPDATE_VEHICLES } from './actionTypes';
-import { VehiclesActionTypes } from './vehiclesTypes';
-import { Veiculo } from '../../types';
+import vehicleReducer from './vehicleReducer'
+import { UPDATE_VEHICLES } from './actionTypes'
+import { VehiclesActionTypes } from './vehiclesTypes'
+import { Pagination, Veiculo } from '../../types'
 
 describe('features > vehicle > vehicleReducer', () => {
   test(`updates vehicles in state when ${UPDATE_VEHICLES} action is provided`, () => {
     const initialState = {
       value: [] as Veiculo[],
-    };
+      pagination: {} as Pagination,
+      destaque: {} as Veiculo,
+    }
 
     const expectedState = {
       value: [
@@ -19,8 +21,8 @@ describe('features > vehicle > vehicleReducer', () => {
           foto: 'https://example.com/corolla.jpg',
           valor: 25000,
         },
-      ]
-    };
+      ],
+    }
 
     const action: VehiclesActionTypes = {
       type: UPDATE_VEHICLES,
@@ -34,8 +36,8 @@ describe('features > vehicle > vehicleReducer', () => {
           valor: 25000,
         },
       ],
-    };
+    }
 
-    expect(vehicleReducer(initialState, action)).toEqual(expectedState);
-  });
-});
+    expect(vehicleReducer(initialState, action)).toEqual(expectedState)
+  })
+})

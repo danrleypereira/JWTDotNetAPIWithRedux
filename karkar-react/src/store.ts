@@ -1,19 +1,23 @@
-import { combineReducers, createStore } from 'redux'
-// import thunk from 'redux-thunk'
-import { devToolsEnhancer } from 'redux-devtools-extension'
+import { applyMiddleware, combineReducers, createStore, AnyAction } from 'redux'
+import thunk, { ThunkMiddleware, ThunkDispatch } from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { CounterReducer, VehicleReducer } from './features'
 
 /* Create root reducer, containing all features of the application */
 const rootReducer = combineReducers({
   count: CounterReducer,
-  vehicles: VehicleReducer
+  vehicles: VehicleReducer,
 })
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof rootReducer>
+export type AppDispatch = ThunkDispatch<RootState, undefined, AnyAction>
 
-const store = createStore(
-  rootReducer,
-  /* preloadedState, */ devToolsEnhancer({})
+const composedEnhancer = composeWithDevTools(
+  // EXAMPLE: Add whatever middleware you actually want to use here
+  applyMiddleware(thunk as ThunkMiddleware<RootState, AnyAction>)
+  // other store enhancers if any
 )
+
+const store = createStore(rootReducer, /* preloadedState, */ composedEnhancer)
 
 export default store

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    # Use the Dockerfile to build the image for the app service
+    build:
+      context: .  # The path to your React app directory
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Map the container's port 3000 to the host's port 3000

@@ -1,7 +1,7 @@
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../../store'
-import { fetchVeiculos } from '../../services'
+import { vehicles } from '../../services'
 import { PaginatedResponse, Pagination } from '../../types'
 import { fetchDataSuccess, updatePaginationAction } from './vehiclesActions'
 import { GenericAction } from './vehiclesTypes'
@@ -12,7 +12,10 @@ export const fetchVehiclesThunk = (
   pageSize: number = 10
 ): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
   try {
-    const response: PaginatedResponse = await fetchVeiculos(page, pageSize)
+    const response: PaginatedResponse = await vehicles.fetchVeiculos(
+      page,
+      pageSize
+    )
     dispatch(fetchDataSuccess(response.veiculos))
     const pagination: Pagination = {
       nextPage: response.nextPage,
@@ -41,16 +44,3 @@ export const fetchVehiclesThunk = (
     // dispatch({ type: FETCH_DATA_FAILURE, error });
   }
 }
-
-// // Thunk action to fetch vehicles from the API
-// export const fetchVehiclesThunk = createAsyncThunk<Veiculo[], { page: number; pageSize: number }>(
-//   'vehicle/fetchVehicles',
-//   async ({ page, pageSize }, { rejectWithValue }) => {
-//     try {
-//       const response: PaginatedResponse = await fetchVeiculos(page, pageSize);
-//       return response.veiculos;
-//     } catch (error) {
-//       return rejectWithValue(error.message); // Handle errors
-//     }
-//   }
-// );

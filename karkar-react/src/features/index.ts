@@ -1,3 +1,4 @@
 import { CounterReducer } from './counter'
 import { VehicleReducer } from './vehicle'
-export { CounterReducer, VehicleReducer }
+import { UserReducer } from './user'
+export { CounterReducer, VehicleReducer, UserReducer }

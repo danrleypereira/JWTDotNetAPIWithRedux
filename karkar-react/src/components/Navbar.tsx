@@ -1,7 +1,11 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectors } from '../features/user'
 
-export const Navbar: React.FC = () => (
+export const Navbar: React.FC = () => {
+  const user = useSelector(selectors.getUserValue)
+  return (
   <nav>
     <div className="nav-wrapper cyan darken-1 px1">
       <NavLink to="/" className="brand-logo">
@@ -17,7 +21,17 @@ export const Navbar: React.FC = () => (
         <li>
           <NavLink to="/about">About</NavLink>
         </li>
+        {user ? (
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+        ) : (
+          <li>
+            <NavLink to="/profile">Profile</NavLink>
+          </li>
+        )}
       </ul>
     </div>
   </nav>
 )
+}

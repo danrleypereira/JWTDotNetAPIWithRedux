@@ -23,6 +23,4 @@ namespace DTOs.Veiculo
         public int PreviousPage { get; set; }
         public int TotalPages { get; set; }
     }
-
-
 }

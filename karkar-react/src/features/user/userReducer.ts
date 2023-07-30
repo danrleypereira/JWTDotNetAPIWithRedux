@@ -6,11 +6,11 @@ import {
 } from './actionTypes'
 
 import { UserActionTypes } from './usersTypes'
-import { User } from '../../types'
+import { User, Token } from '../../types'
 
 const initialState = {
     value: {} as User,
-    token: '',
+    token: {} as Token,
 }
 
 export default (state = initialState, action: UserActionTypes) => {

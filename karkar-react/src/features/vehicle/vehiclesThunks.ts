@@ -2,8 +2,8 @@
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../../store'
 import { vehicles } from '../../services'
-import { PaginatedResponse, Pagination } from '../../types'
-import { fetchDataSuccess, updatePaginationAction } from './vehiclesActions'
+import { PaginatedResponse, Pagination, Veiculo } from '../../types'
+import { fetchDataSuccess, updatePaginationAction, vehicleHoveredAction } from './vehiclesActions'
 import { GenericAction } from './vehiclesTypes'
 import { UPDATE_VEHICLES } from './actionTypes'
 
@@ -44,3 +44,47 @@ export const fetchVehiclesThunk = (
     // dispatch({ type: FETCH_DATA_FAILURE, error });
   }
 }
+
+// update vehicle by id thunk
+export const updateVehicleThunk = (
+  veiculo: Veiculo,
+  token: string
+): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
+  try {
+    await vehicles.updateVeiculoById(veiculo, token)
+    dispatch(fetchVehiclesThunk())
+    dispatch(vehicleHoveredAction(veiculo))
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+// add vehicle thunk
+export const addVehicleThunk = (
+  veiculo: Veiculo,
+  token: string
+): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
+  try {
+    await vehicles.addVeiculo(veiculo, token)
+    dispatch(fetchVehiclesThunk())
+    dispatch(vehicleHoveredAction(veiculo))
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const deleteVehicleThunk = (
+  id: number,
+  token: string
+): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
+  try {
+    await vehicles.deleteVeiculoById(id, token)
+    dispatch(fetchVehiclesThunk())
+    dispatch(vehicleHoveredAction({} as Veiculo))
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+

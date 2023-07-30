@@ -8,6 +8,7 @@ export default {
     updateById: (id: number) => `${API_BASE_URL}/Veiculos/${id}`,
     deleteById: (id: number) => `${API_BASE_URL}/Veiculos/${id}`,
     getAll: () => `${API_BASE_URL}/Veiculos`,
+    saveVehicle: () => `${API_BASE_URL}/Veiculos`,
   },
   users: {
     login: () => `${API_BASE_URL}/Users/BearerToken`,

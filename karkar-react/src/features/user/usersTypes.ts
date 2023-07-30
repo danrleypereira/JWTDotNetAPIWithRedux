@@ -1,6 +1,6 @@
 import { SET_TOKEN, SET_USER } from './actionTypes'
 
-import { User } from '../../types'
+import { User, Token } from '../../types'
 
 interface SetUserAction {
   type: typeof SET_USER
@@ -14,7 +14,7 @@ export type GenericAction = {
 
 interface SetTokenAction {
   type: typeof SET_TOKEN
-  payload: string
+  payload: Token
 }
 
 export type UserActionTypes = SetUserAction | SetTokenAction
@@ -22,6 +22,6 @@ export type UserActionTypes = SetUserAction | SetTokenAction
 export interface SystemState {
   user: {
     value: User
-    token: string
+    token: Token
   }
 }

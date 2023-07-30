@@ -1,4 +1,4 @@
-import { User } from '../../types'
+import { User, Token } from '../../types'
 import {
     SET_TOKEN,
     SET_USER,
@@ -9,7 +9,7 @@ const addUserAction = (user: User) => ({
     payload: user,
 })
 
-const setTokenAction = (token: string) => ({
+const setTokenAction = (token: Token) => ({
     type: SET_TOKEN,
     payload: token,
 })

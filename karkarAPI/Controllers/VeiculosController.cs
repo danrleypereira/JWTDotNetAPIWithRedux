@@ -10,19 +10,25 @@ namespace karkarAPI.Controllers
     [ApiController]
     public class VeiculosController : ControllerBase
     {
+        private readonly ILogger<VeiculosController> _logger;
         private readonly IVeiculoRepository _veiculoRepository;
-        public VeiculosController(IVeiculoRepository veiculoRepository)
+        public VeiculosController(IVeiculoRepository veiculoRepository, ILogger<VeiculosController> logger)
         {
             _veiculoRepository = veiculoRepository;
+            _logger = logger;
+
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<VeiculoResponseDTO>> GetVeiculoById(int id)
         {
+            _logger.LogInformation("Getting vehicle by id {Id}", id);
+
             var veiculo = await _veiculoRepository.GetVeiculoByIdAsync(id);
 
             if (veiculo == null)
             {
+                _logger.LogWarning("Vehicle with id {Id} not found", id);
                 return NotFound();
             }
 

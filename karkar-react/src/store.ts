@@ -1,12 +1,13 @@
 import { applyMiddleware, combineReducers, createStore, AnyAction } from 'redux'
 import thunk, { ThunkMiddleware, ThunkDispatch } from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { CounterReducer, VehicleReducer } from './features'
+import { CounterReducer, VehicleReducer, UserReducer } from './features'
 
 /* Create root reducer, containing all features of the application */
 const rootReducer = combineReducers({
   count: CounterReducer,
   vehicles: VehicleReducer,
+  user: UserReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

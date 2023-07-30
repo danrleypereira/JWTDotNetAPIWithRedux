@@ -1,9 +1,9 @@
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../../store'
-import { fetchVeiculos } from '../../services'
-import { PaginatedResponse, Pagination } from '../../types'
-import { fetchDataSuccess, updatePaginationAction } from './vehiclesActions'
+import { vehicles } from '../../services'
+import { PaginatedResponse, Pagination, Veiculo } from '../../types'
+import { fetchDataSuccess, updatePaginationAction, vehicleHoveredAction } from './vehiclesActions'
 import { GenericAction } from './vehiclesTypes'
 import { UPDATE_VEHICLES } from './actionTypes'
 
@@ -12,7 +12,10 @@ export const fetchVehiclesThunk = (
   pageSize: number = 10
 ): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
   try {
-    const response: PaginatedResponse = await fetchVeiculos(page, pageSize)
+    const response: PaginatedResponse = await vehicles.fetchVeiculos(
+      page,
+      pageSize
+    )
     dispatch(fetchDataSuccess(response.veiculos))
     const pagination: Pagination = {
       nextPage: response.nextPage,
@@ -42,15 +45,46 @@ export const fetchVehiclesThunk = (
   }
 }
 
-// // Thunk action to fetch vehicles from the API
-// export const fetchVehiclesThunk = createAsyncThunk<Veiculo[], { page: number; pageSize: number }>(
-//   'vehicle/fetchVehicles',
-//   async ({ page, pageSize }, { rejectWithValue }) => {
-//     try {
-//       const response: PaginatedResponse = await fetchVeiculos(page, pageSize);
-//       return response.veiculos;
-//     } catch (error) {
-//       return rejectWithValue(error.message); // Handle errors
-//     }
-//   }
-// );
+// update vehicle by id thunk
+export const updateVehicleThunk = (
+  veiculo: Veiculo,
+  token: string
+): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
+  try {
+    await vehicles.updateVeiculoById(veiculo, token)
+    dispatch(fetchVehiclesThunk())
+    dispatch(vehicleHoveredAction(veiculo))
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+// add vehicle thunk
+export const addVehicleThunk = (
+  veiculo: Veiculo,
+  token: string
+): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
+  try {
+    await vehicles.addVeiculo(veiculo, token)
+    dispatch(fetchVehiclesThunk())
+    dispatch(vehicleHoveredAction(veiculo))
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const deleteVehicleThunk = (
+  id: number,
+  token: string
+): ThunkAction<void, RootState, unknown, GenericAction> => async (dispatch) => {
+  try {
+    await vehicles.deleteVeiculoById(id, token)
+    dispatch(fetchVehiclesThunk())
+    dispatch(vehicleHoveredAction({} as Veiculo))
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
